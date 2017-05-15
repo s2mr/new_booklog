@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   def index
+    # flash[:notice] = "ようこそ。本日は#{Date.today}です。"
     @posts = Post.all.order(created_at: :desc)
     @new_posts = Post.find_newest_article
   end
@@ -22,12 +23,25 @@ class PostsController < ApplicationController
   end
 
   def edit
+    @post = Post.find(params[:id])
   end
 
   def update
+    @post = Post.find(params[:id])
+    if @post.update(post_params)
+      redirect_to @post, notice: '更新に成功しました'
+    else
+      render 'edit'
+    end
   end
 
   def destroy
+    @post = Post.find(params[:id])
+    if @post.destroy
+      redirect_to @post, notice: '削除しました'
+    else
+      render 'show'
+    end
   end
 
   private
