@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :authenticate_author!, only: [ :new, :create, :edit, :update, :destroy ]
+  before_action :authenticate_author!, only: %i[new create edit update destroy]
   def index
     # flash[:notice] = "ようこそ。本日は#{Date.today}です。"
     @posts = Post.all.order(created_at: :desc)
